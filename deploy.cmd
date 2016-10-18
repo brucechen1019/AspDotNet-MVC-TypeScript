@@ -124,11 +124,6 @@ call :SelectNodeVersion
 :: 5. Install npm packages
 
 echo Install npm packages.
-IF EXIST "%DEPLOYMENT_SOURCE%\WebApplication\package.json" (
-  pushd "%DEPLOYMENT_SOURCE%\WebApplication"
-  ::echo "call :ExecuteCmd !NPM_CMD! install --production"
-  IF !ERRORLEVEL! NEQ 0 goto error
-)
 
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
