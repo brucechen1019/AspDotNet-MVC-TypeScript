@@ -115,19 +115,21 @@ IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
 
 echo "%DEPLOYMENT_SOURCE%\WebApplication\package.json"
 
+:: 4. Select node version
 
-echo Build to the temporary path
-:: 2. Build to the temporary path
-IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
-  echo IN_PLACE_DEPLOYMENT NEQ 1
-  call :ExecuteCmd "%MSBUILD_PATH%" "%DEPLOYMENT_SOURCE%\WebApplication\WebApplication.csproj" /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="%DEPLOYMENT_TEMP%";AutoParameterizationWebConfigConnectionStrings=false;Configuration=Release;UseSharedCompilation=false /p:SolutionDir="%DEPLOYMENT_SOURCE%\.\\" %SCM_BUILD_ARGS%
-) ELSE (
-  call :ExecuteCmd "%MSBUILD_PATH%" "%DEPLOYMENT_SOURCE%\WebApplication\WebApplication.csproj" /nologo /verbosity:m /t:Build /p:AutoParameterizationWebConfigConnectionStrings=false;Configuration=Release;UseSharedCompilation=false /p:SolutionDir="%DEPLOYMENT_SOURCE%\.\\" %SCM_BUILD_ARGS%
+echo Select node version.
+
+call :SelectNodeVersion
+
+:: 5. Install npm packages
+
+echo Install npm packages.
+IF EXIST "%DEPLOYMENT_SOURCE%\WebApplication\package.json" (
+  pushd "%DEPLOYMENT_SOURCE%\WebApplication"
+  echo "call :ExecuteCmd !NPM_CMD! install --production"
+  call :ExecuteCmd !NPM_CMD! install --production
+  IF !ERRORLEVEL! NEQ 0 goto error
 )
-
-IF !ERRORLEVEL! NEQ 0 goto error
-
-
 
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
