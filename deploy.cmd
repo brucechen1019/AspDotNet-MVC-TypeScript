@@ -73,11 +73,20 @@ IF /I "AspDotNet-MVC-TypeScript.sln" NEQ "" (
 )
 
 :: Install NPM Package
-echo Installing typescript typings
-call npm install typescript -g
-call npm install typings -g
-echo Installed typescript typings
-IF !ERRORLEVEL! NEQ 0 goto error
+:: echo Installing typescript typings
+:: call npm install typescript -g
+:: call npm install typings -g
+:: echo Installed typescript typings
+:: IF !ERRORLEVEL! NEQ 0 goto error
+
+IF EXIST "%DEPLOYMENT_TARGET%\WebApplication\package.json" (
+  echo exist package.json
+  pushd "%DEPLOYMENT_TARGET%\WebApplication"
+  echo install npm package
+  call :ExecuteCmd !NPM_CMD! install --production
+  IF !ERRORLEVEL! NEQ 0 goto error
+  popd
+)
 
 :: 2. Build to the temporary path
 echo Build to the temporary path
