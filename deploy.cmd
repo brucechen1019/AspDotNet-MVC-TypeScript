@@ -78,6 +78,7 @@ call npm install typescript -g
 call npm install typings -g
 echo Installed typescript & typings
 IF !ERRORLEVEL! NEQ 0 goto error
+popd
 
 :: 2. Build to the temporary path
 echo Build to the temporary path
