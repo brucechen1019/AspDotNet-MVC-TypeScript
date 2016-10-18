@@ -1,0 +1,8 @@
+﻿{
+  "scripts": {
+    "preinstall": [
+      "npm install typescript -g",
+      "npm install typings -g" 
+    ]
+  }
+}
