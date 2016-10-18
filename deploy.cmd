@@ -125,6 +125,7 @@ call :SelectNodeVersion
 
 :: 5. Install npm packages
 
+echo %DEPLOYMENT_TARGET%
 echo Install npm packages.
 
 IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
