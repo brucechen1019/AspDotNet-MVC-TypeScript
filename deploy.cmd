@@ -113,21 +113,7 @@ IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
 )
 
 
-:: 4. Select node version
-
-echo Select node version.
-
-call :SelectNodeVersion
-
-:: 5. Install npm packages
-
-echo Install npm packages.
-IF EXIST "%DEPLOYMENT_SOURCE%\WebApplication\package.json" (
-  echo "%DEPLOYMENT_SOURCE%\WebApplication\package.json"
-  pushd "%DEPLOYMENT_SOURCE%\WebApplication\"
-  call :ExecuteCmd !NPM_CMD! install --production
-  IF !ERRORLEVEL! NEQ 0 goto error
-)
+echo "%DEPLOYMENT_SOURCE%\WebApplication\package.json"
 
 
 echo Build to the temporary path
