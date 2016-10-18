@@ -118,9 +118,15 @@ IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
 )
 
 :: 4. Select node version
+
+echo Select node version.
+
 call :SelectNodeVersion
 
 :: 5. Install npm packages
+
+echo Install npm packages.
+
 IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   pushd "%DEPLOYMENT_TARGET%"
   call :ExecuteCmd !NPM_CMD! install --production
