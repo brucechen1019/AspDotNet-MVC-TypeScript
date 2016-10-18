@@ -1,8 +1,13 @@
-﻿{
+{
   "scripts": {
-    "preinstall": [
-      "npm install typescript -g",
-      "npm install typings -g" 
-    ]
-  }
+    "preinstall": "npm install typescript && npm install typings"
+  },
+  "name": "webapp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
