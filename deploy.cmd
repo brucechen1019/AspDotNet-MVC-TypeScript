@@ -95,6 +95,7 @@ IF DEFINED KUDU_SELECT_NODE_VERSION_CMD (
 :: ----------
 
 echo Handling .NET Web Application deployment.
+echo hello world
 
 :: 1. Restore NuGet packages
 IF /I "AspDotNet-MVC-TypeScript.sln" NEQ "" (
