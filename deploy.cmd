@@ -127,8 +127,6 @@ echo Install npm packages.
 IF EXIST "%DEPLOYMENT_SOURCE%\WebApplication\package.json" (
   pushd "%DEPLOYMENT_SOURCE%\WebApplication"
   ::echo "call :ExecuteCmd !NPM_CMD! install --production"
-  call npm install typescript -g --silent
-  call npm install typings -g --silent
   IF !ERRORLEVEL! NEQ 0 goto error
 )
 
