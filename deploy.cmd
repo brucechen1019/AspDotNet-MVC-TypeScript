@@ -60,33 +60,6 @@ IF DEFINED CLEAN_LOCAL_DEPLOYMENT_TEMP (
 IF DEFINED MSBUILD_PATH goto MsbuildPathDefined
 SET MSBUILD_PATH=%ProgramFiles(x86)%\MSBuild\14.0\Bin\MSBuild.exe
 :MsbuildPathDefined
-
-
-:SelectNodeVersion
-IF DEFINED KUDU_SELECT_NODE_VERSION_CMD (
-  :: The following are done only on Windows Azure Websites environment
-  call %KUDU_SELECT_NODE_VERSION_CMD% "%DEPLOYMENT_SOURCE%" "%DEPLOYMENT_TARGET%" "%DEPLOYMENT_TEMP%"
-  IF !ERRORLEVEL! NEQ 0 goto error
-
-  IF EXIST "%DEPLOYMENT_TEMP%\__nodeVersion.tmp" (
-    SET /p NODE_EXE=<"%DEPLOYMENT_TEMP%\__nodeVersion.tmp"
-    IF !ERRORLEVEL! NEQ 0 goto error
-  )
-  
-  IF EXIST "%DEPLOYMENT_TEMP%\__npmVersion.tmp" (
-    SET /p NPM_JS_PATH=<"%DEPLOYMENT_TEMP%\__npmVersion.tmp"
-    IF !ERRORLEVEL! NEQ 0 goto error
-  )
-
-  IF NOT DEFINED NODE_EXE (
-    SET NODE_EXE=node
-  )
-
-  SET NPM_CMD="!NODE_EXE!" "!NPM_JS_PATH!"
-) ELSE (
-  SET NPM_CMD=npm
-  SET NODE_EXE=node
-)
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Deployment
 :: ----------
@@ -99,21 +72,24 @@ IF /I "AspDotNet-MVC-TypeScript.sln" NEQ "" (
   IF !ERRORLEVEL! NEQ 0 goto error
 )
 
-:: Install NPM Package
-:: echo Installing typescript typings
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:: Installing typescript and typings
+:: ----------
+
+:: echo Installing typescript and typings
 :: call npm install typescript -g
 :: call npm install typings -g
-:: echo Installed typescript typings
 :: IF !ERRORLEVEL! NEQ 0 goto error
 
-IF EXIST "%DEPLOYMENT_SOURCE%\WebApplication\package.json" (
-  echo exist package.json
-  pushd "%DEPLOYMENT_SOURCE%\WebApplication"
+
+IF EXIST "%DEPLOYMENT_SOURCE%\package.json" (
+  pushd "%DEPLOYMENT_SOURCE%"
   echo install npm package
-  call :ExecuteCmd !NPM_CMD! install --production
+  call :ExecuteCmd npm install --production
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
 )
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :: 2. Build to the temporary path
 echo Build to the temporary path
