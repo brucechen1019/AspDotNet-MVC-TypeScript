@@ -77,6 +77,7 @@ echo Installing typescript & typings
 call npm install typescript -g
 call npm install typings -g
 echo Installed typescript & typings
+IF !ERRORLEVEL! NEQ 0 goto error
 
 :: 2. Build to the temporary path
 IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
