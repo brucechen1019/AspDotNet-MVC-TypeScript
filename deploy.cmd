@@ -79,9 +79,9 @@ IF /I "AspDotNet-MVC-TypeScript.sln" NEQ "" (
 :: echo Installed typescript typings
 :: IF !ERRORLEVEL! NEQ 0 goto error
 
-IF EXIST "%DEPLOYMENT_TARGET%\WebApplication\package.json" (
+IF EXIST "%DEPLOYMENT_SOURCE%\WebApplication\package.json" (
   echo exist package.json
-  pushd "%DEPLOYMENT_TARGET%\WebApplication"
+  pushd "%DEPLOYMENT_SOURCE%\WebApplication"
   echo install npm package
   call :ExecuteCmd !NPM_CMD! install --production
   IF !ERRORLEVEL! NEQ 0 goto error
