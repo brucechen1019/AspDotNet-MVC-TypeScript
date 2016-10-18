@@ -72,6 +72,11 @@ IF /I "AspDotNet-MVC-TypeScript.sln" NEQ "" (
   IF !ERRORLEVEL! NEQ 0 goto error
 )
 
+:: Install NPM Package
+echo Installing typescript & typings
+call npm install typescript -g && npm install typings -g
+echo Installed typescript & typings
+
 :: 2. Build to the temporary path
 IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
   call :ExecuteCmd "%MSBUILD_PATH%" "%DEPLOYMENT_SOURCE%\WebApplication\WebApplication.csproj" /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="%DEPLOYMENT_TEMP%";AutoParameterizationWebConfigConnectionStrings=false;Configuration=Release;UseSharedCompilation=false /p:SolutionDir="%DEPLOYMENT_SOURCE%\.\\" %SCM_BUILD_ARGS%
