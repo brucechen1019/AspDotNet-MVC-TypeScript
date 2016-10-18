@@ -8,7 +8,9 @@
   },
   "name": "webapp",
   "version": "1.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "zone.js": "^0.6.25"
+  },
   "devDependencies": {},
   "author": "",
   "license": "ISC",
