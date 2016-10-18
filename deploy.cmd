@@ -73,7 +73,7 @@ IF /I "AspDotNet-MVC-TypeScript.sln" NEQ "" (
 )
 
 :: Install NPM Package
-echo Installing typescript & typings
+echo Installing typescript typings
 call npm install typescript -g
 call npm install typings -g
 echo Installed typescript & typings
